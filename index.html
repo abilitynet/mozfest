@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>JS for Accessibility</title>
+        <title>Intro to Accessibility</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -36,483 +36,33 @@
                 They should all have an attribute of hidden except the first one. The script will do the rest!
             -->
             <article>
-                <h1>JavaScript for accessibility</h1>
-                <h2>Basics of JavaScript, what can go wrong and how to fix it</h2>
-                <p>Victor Loux</p>
+                <h1>Intro to accessibility workshop</h1>
+                <h2>EMF 2018 &middot; Victor Loux &middot; <a href="https://twitter.com/lgorithm">@lgorithm</a></h2>
+                <p>A copy of all the slides, notes and resources can be found on <a href="https://github.com/victorloux/emf-a11y">this GitHub repository</a>. The following slides have 3 keyboard exercises/examples, and two for screen readers.</p>
+                
+                <h2>Resources</h2>
 
-                <img src="images/abilitynet.jpg" alt="AbilityNet" style="width: 100%; max-width: 300px">
+                <ul>
+                    <li><a href="https://www.nvaccess.org/download/">Downloading NVDA</a> and keep a handy <a href="https://www.cheatography.com/jreiche/cheat-sheets/screen-reader-testing/">cheat sheet for shortcuts</a></li>
+                    <li>Download <a href="https://chrome.google.com/webstore/detail/axe/lhdoppojpmngadmnindnejefpokejbdd">aXe for Chrome</a> or <a href="http://bit.ly/aXe-Firefox">aXe for Firefox</a></li>
+                    <li>The <a href="https://www.w3.org/TR/wai-aria-practices-1.1/">ARIA Authoring Practices</a> show many accessible patterns developed with ARIA</li>
+                    <li><a href="https://inclusive-components.design/">Inclusive Components</a> is a blog detailing step-by-step how to make components accessible</li>
+                    <li>The new Chrome DevTools now have an Accessibility tab to inspect how nodes are seen in the accessibility tree</li>
+                </ul>
 
                 <label id="disable_code_mirror_label"><input type="checkbox" name="disable_code_mirror"> Disable the advanced code editor (check this if you are using a screen reader)</label>
             </article>
 
+            
             <article hidden>
-                <img src="images/js.png" alt="" class="float-right">
-                <h2>What is JavaScript?</h2>
+                <h2>Keyboard: making custom elements accessible</h2>
 
-                <ul>
-                    <li>The programming language for the Web</li>
-                    <li>A programming language is a way to <strong>give orders</strong> to a computer. It's a bit like a human language, but without ambiguity! Each programming language has vocabulary (keywords that each play a specific role) and grammar (rules defining how to write programs in that language).</li>
-
-                    <!-- There's some nitpicking about whether HTML and CSS are 'programming language' since they're just a specification for publishing, they have no control flow -->
-                    <li>Web pages use 3 main technologies: <strong title="HyperText Markup Language">HTML</strong> define the structure and the content, <strong title="Cascading Style Sheets">CSS</strong> define the styling, <strong title="JavaScript">JS</strong> allows us to add interactivity and dynamic content.</li>
-
-                    <li>Despite the name: not related to Java!</li>
-                </ul>
-            </article>
-
-            <article hidden>
-                <img src="images/burrito.jpg" alt="" class="float-right">
-                <h2>What is a program?</h2>
-
-                <p>It's an ordered sequence of operations for solving a given problem. A program breaks down a complex problem into a series of simple operations. Here's a program that makes a burrito:</p>
-
-                <pre><code class="nohighlight">Begin
-    Get out the rice cooker
-    Fill it with rice
-    Fill it with water
-    Cook the rice
-    Chop the vegetables
-    Stir-fry the vegetables
-    Taste-test the vegetables
-        If the veggies are good
-            Remove them from the stove
-        If the veggies aren't good
-            Add more pepper and spices
-        If the veggies aren't cooked enough
-            Keep stir-frying the veggies
-    Heat the tortilla
-    Add rice to tortilla
-    Add vegetables to tortilla
-    Roll tortilla
-End</code></pre>
-
-                <p>(This is not JavaScript!)</p>
-
-                <p>Notice the different types of actions here:</p>
-                <ul>
-                    <li>simple actions ("get out the rice cooker")</li>
-                    <li>conditional actions ("<em>if</em> the veggies are good")</li>
-                    <li>actions that are repeated ("<em>keep</em> stir-frying the veggies")</li>
-                </ul>
-            </article>
-
-            <article hidden id="example-JS-event">
-                <h2>What can you do with JavaScript?</h2>
-
-                <p>The most interesting part of JavaScript is that it allows us to manipulate HTML and CSS in real time, and react to events in the browser. Check out the example below:</p>
-
-                <button>A magic button</button>
-
-                <div class="toggled-box red">This box is red</div>
-                <pre><code class="html">&lt;div class="<mark>red</mark>"&gt;This box is <mark>red</mark>&lt;/div&gt;</code></pre>
-
-                <h3>We are doing two things here:</h3>
-                <ul>
-                    <li><strong>listen to the <code>click</code> event</strong> on the <code>&lt;button&gt;</code> element, and run some code when it is clicked</li>
-                    <li>that code <strong>manipulates the HTML of our box</strong> to change the value of its <code>class</code> attribute, and the text it contains.</li>
-                </ul>
-
-                <p>Of course, <strong>this is a simplistic example</strong>, but you can do very complex things with JavaScript, such as loading content in real-time from a server without reloading the entire page, manipulating strings of text, hiding and showing elements on the page (e.g. menus, accordions), create custom interactive widgets, react to user input (keyboard, mouse and touch)&hellip;</p>
-
-                <p>When used correctly, JavaScript can greatly enhance the user experience. But if some users are not taken into consideration, <strong>it can make their experience worse</strong>. In the example above, we don't have live regions, so screen reader users are not aware that the text in the box has changed when they press the button. Another common occurence is working only with a mouse or touch, but not keyboard.</p>
-            </article>
-
-            <article hidden>
-                <h2>Instructions</h2>
-
-                <p>Below this paragraph is a console, which allows you to type some JavaScript code and immediately get the result. Try some simple instructions like <code>5&nbsp;+&nbsp;3</code>, or <code>40&nbsp;*&nbsp;28000</code>. To deal with text, you have to wrap it with quotations marks, <code>"like&nbsp;this"</code>. You can concatenate (add) two strings of text with the <code>+</code> operator: try it!</p>
-
-                <div class="console-container">
-                    <div class="console"></div>
-                </div>
-
-                <p>We will talk more about this later, but you will need to remember that in JavaScript, you need to add a semicolon <code>;</code> after each instruction.</p>
-            </article>
-
-            <article hidden>
-                <h2>Variables</h2>
-
-                <p>In programming we use a lot of <strong>variables</strong>. These are “containers” that retain a certain value, and allows us to avoid repetition, or take data set by the user. Variables, as their name indicate, can change value over time.</p>
-
-                <p>Initialise a variable for the first time with the <code>var</code> keyword, followed by its name, then its value. For example <code>var&nbsp;age&nbsp;=&nbsp;4</code>.</p>
-
-                <p>You can only <strong>initialise</strong> a variable once. To change its value after that, use an equal sign <code>=</code> operator, <strong>without</strong> the <code>var</code> keyword. Once you have variables you can then use them in place of a number, for example <code>age + 5</code>.</p>
-
-                <div class="console-container">
-                    <div class="console"></div>
-                </div>
-
-                <h3>Types</h3>
-
-                <p>Variables can take many possible type of values, for instance:</p>
-
-                <ul>
-                    <li>Numbers: for example <code>42</code> or <code>5.2</code></li>
-                    <li>Strings: chains of characters surrounded by quotations marks, for example <code>"apples"</code></li>
-                    <li>Boolean: this is either the values <code>true</code> or <code>false</code>. This is used very often for making logical statements and conditions; and remembering the <strong>state</strong> of something (for example "pressed or not").</li>
-                    <li>Objects. We will talk about these later, but they are sort of “containers” that can contain variables and functions. You will see dots to access what's in an object, for example <code>person.name</code>.</li>
-                </ul>
-
-                <p>Try declaring multiple variable and adding them together. See what happens if you add a number to a string, or two strings together!</p>
-
-                <h3>Names</h3>
-
-                <p>You may notice there are some rules about how you can name a variable. Variable names may only contain letters, numbers (but not in the first position) and an underscore (_). See what happens if you try to declare variables called <code>my&nbsp;first&nbsp;name</code>, <code>name-of-the-user</code>, or <code>2nd_favourite_colour</code>.</p>
-
-                <p>It's good practice to give descriptive names, rather than single-letter variables like in maths (<code>x</code>, <code>y</code>, <code>a</code>&hellip;). A common thing to do is using a mix of uppercase and lowercase, for example <code>var myFavouriteFruit = "apple"</code>.</p>
-            </article>
-
-            <article hidden id="example-controlflow">
-                <h2>Conditions 1: introduction</h2>
-
-                <p>An important part of programming is having a <strong>control flow</strong>. This is where our program can make <strong>decisions</strong>. The most common way to do this is with an <strong>if-else</strong> statement.</p>
-
-                <pre><code class="nohighlight">If <mark>condition</mark> is true, <em>then</em>
-    do something
-else
-    do something else</code></pre>
-
-                <p>The condition is always a <strong>boolean</strong> expression, i.e. it is either <code>true</code> or <code>false</code>. For example, <code>6 + 6 == 3</code> is false, but <code>6 + 6 == 12</code> is true. Of course there is little point in testing fixed values because they will always be true or false, but it becomes interesting with variables as we can change the behaviour dynamically.<p>
-
-                <p>Let's have an example. We will set a variable using the box below, to see if someone is over 18:</p>
-
-                <p><label><code>var age = </code><input type="number" name="value" length="3" value="15"><code>;</code></label></p>
-
-                <pre><code>if(age >= 18) {
-    <mark id="if-true">message = "You are an adult!";</mark>
-} else {
-    <mark id="if-false">message = "Hang on there kiddo, you can't buy alcohol";</mark>
-}</code></pre>
-
-                <p aria-live="polite"><code>message</code> is now "<span id="message-result"></span>".</p>
-
-                <h3>Let's break down the syntax</h3>
-
-                <ul>
-                    <li><code>if (<em>condition</em>)</code> means "if the condition (what is between the parentheses) is true, then execute the following block".</li>
-                    <li><code class="javascript">age >= 18</code> is the condition: it checks whether the variable <code>age</code> is greater than or equal to 18 (<code>>=</code> is like &ge; in maths).</li>
-                    <li>The curly braces <code>{ ... }</code> define a <strong>block</strong>. They delimitate the start and end of what we want to run. They're used everywhere in JavaScript, not just for conditions. It's also important to know <strong>you can nest them</strong>!</li>
-                    <li>The <strong>else</strong> statement say "if the condition above was false, then instead of running the block above, run this one instead." <strong>It is not mandatory</strong> to have an <code>else</code> statement; you can have a condition without it.</li>
-                </ul>
-            </article>
-
-            <article hidden id="example-controlflow2">
-                <h2>Conditions 2: operators, else if and nesting</h2>
-
-                <h3>Comparison operators</h3>
-
-                <p>In addition to the greater / lesser than operator (&gt;, &ge;, &lt;, &le;) you will also encounter:</p>
-
-                <pre><code>if(age == 36) { &hellip; }</code></pre>
-
-                <p>This means "if the variable <code>age</code> is <strong>exactly equal to</strong>" 36. Note that to say "equal", we use <strong>two</strong> equal signs; this is because a single equal sign is used for assigning a value to a variable. If we wrote <code>age = 36</code> it would mean "set the variable <code>age</code> to be 36", instead of comparing two values.</p>
-
-                <pre><code>if(favouriteFruit != "banana") { &hellip; }</code></pre>
-
-                <p>This operator, <code>!=</code>, means <em>not equal to</em> (&ne;). You can use it to say what you <em>don't want</em>: it inverses the result.</p>
-
-                <h3>Nesting</h3>
-
-                <p>Here are are nesting several <code>if</code> statements. This allows us to have several conditions one after the other. If the user is under 18, then we check if they are 16 or over. If they are between 16 and 18, then we can check on another boolean variable (are they having a meal?): and if so we can give them a specific message. But this is a pretty long way to do it: we can also write it as...</p>
-
-                <pre><code>if(age &lt; 18) {
-    if(age &gt;= 16) {
-        if(isHavingAMeal == true) {
-            message = "OK, maybe you can if your parents are here...";
-        }
-    }
-}</code></pre>
-
-                <h3>Else If</h3>
-
-                <p>You can test over more than one condition when using <code>else if(<em>condition</em>)</code>. Conditions are tested in order until one is true; if none of them is true, then it will fall back on the <code>else</code> block.</p>
-
-                <p><label><code>var weather = "<input type="text" name="weather" value="windy">";</code></label></p>
-                <pre><code>if (weather == "sunny") {
-    tip = "T-shirt time!";
-} else if (weather == "windy") {
-    tip = "Windbreaker life.";
-} else if (weather == "rainy") {
-    tip = "Bring that umbrella!";
-} else if (weather == "snowy") {
-    tip = "Just stay inside!";
-} else {
-    tip = "Not a valid weather type";
-}</code></pre>
-                <p aria-live="polite"><code>tip</code> is now "<span id="message-result"></span>".</p>
-            </article>
-
-            <article hidden>
-                <h2>Conditions 3: logic operators</h2>
-
-                <pre><code>if(age &lt; 18 <mark>&amp;&amp;</mark> age &gt;= 16 <mark>&amp;&amp;</mark> isHavingAMeal == true) { &hellip; }</code></pre>
-
-                <p>The <code>&amp;&amp;</code> operator means <strong>AND</strong>. We can have expressions on both side of it, and the entire condition will only be true <string>if all</strong> the statements are true: is the user under 18, over 16, and is having a meal? If so, run the block.<br> There is also an operator for OR, which is two pipe signs (<code>||</code>):</p>
-
-                <pre><code>if(favouriteFruit == "orange" || favouriteFruit == "lemon") {
-    message = "Yum! Citrus!";
-}</code></pre>
-
-                <p>The block above will run if <code>favouriteFruit</code> is <strong>either</strong> "orange" or "lemon", but not if it is anything else (like "apple" or "banana").</p>
-
-
-                <h3>Try it!</h3>
-
-                <p>Think you got it? Have a play below!</p>
-
-                <div class="bin bin-console">
-                    <code class="code-js nohighlight"><!--// Type "message" in the console to see its value
-
-var message;
-var age = 23;
-
-if(age >= 18) {
-    message = "Hello, fellow adult.";
-} else {
-    message = "Hi kiddo!"
-}
---></code>
-                </div>
-
-                <p>You can try to:</p>
-                <ul>
-                    <li>Write an if block yourself</li>
-                    <li>Declare some variables and use operators. You can type expressions directly in the console to see what happens: try <code>7 &lt; 10</code>, <code>a &lt; 16 &amp;&amp; a &gt; 18</code>&hellip;</li>
-                    <li>Write an if-elseif-else statement which prints a different message if a variable is a negative number, zero, or positive.</li>
-                </ul>
-            </article>
-
-            <article hidden>
-                <h2>Functions</h2>
-
-                <p>Functions are another important aspect of code. They allow you to repeat the same block of code without having to copy and paste the same code over and over. Functions are first <strong>defined</strong> somewhere, this is when we define what they will do</p>
-
-                <pre><code>function sayHello() {
-    console.log("Hello, AbilityNet!")
-}</code></pre>
-
-                <p>We have the keyword <strong>function</strong> to say what it is (a bit like <code>var</code>), and then the name of the function (<strong>sayHello</strong>), parentheses (we'll talk about these later) and braces to start a <strong>block</strong>, to define the start and end of the function code.<p>
-
-                <p>Once you've defined a function once, you can <strong>call</strong> it later in your program. This is done by using the name of the function with parentheses:</p>
-
-                <pre><code>sayHello();
-sayHello();</code></pre>
-
-                <p>Our console will output:</p>
-
-                <pre><code>Hello, AbilityNet!
-Hello, AbilityNet!</code></pre>
-
-                <p>Functions are interesting because they can also take <strong>arguments</strong>. This means what they do can depend on an input parameter. This is what the parentheses are for: they can contain a list of arguments. Our function <code>sayHello</code> did not have any argument, but we can define them in the definition and the call:</p>
-
-                <pre><code>function double(<mark>number</mark>) {
-    console.log(number * 2);
-}
-
-double(<mark>6</mark>); // 12
-double(<mark>10</mark>); // 20
-double(<mark>0.5</mark>); // 0.25</code></pre>
-
-                <p>(you may note that in the definition, we actually called a function called <code>console.log</code>, with a string as an argument. We'll talk about dots in function names later).</p>
-
-                <p>More arguments can be separated with a comma, like <code>add(number1, number2, number3)</code>. Try to define and call such function that adds 3 numbers below:</p>
-
-                <div class="bin bin-console">
-                    <code class="code-js nohighlight"><!--function add(number1) {
-    console.log(number1);
-}
-
-// This should output 19
-add(6, 10, 3);--></code>
-                </div>
-
-            </article>
-
-
-            <article hidden>
-                <h2>Selecting HTML elements from JavaScript</h2>
-
-                <p>We will now start to look at how JavaScript interacts with HTML and CSS. To modify elements on a page, we can first <strong>select</strong> an HTML element, in the same way that we do with CSS. We can then assign this HTML element to a variable, and then do things to that variable, like changing the text inside it, its attributes or CSS properties.</p>
-
-                <p>There are many ways to select HTML elements in JavaScript, but the easiest is <code>document.querySelector(<em>selector</em>)</code>, where <code>selector</code> is a string that contains a CSS selector. For example, <code>"#weekends"</code> for the element with an ID of "hidden", <code>".menuBar"</code> for elements with a class of "menuBar", or <code>"h2"</code> for all h2 elements.</p>
-
-                <p>The one downside of <code>document.querySelector</code> is that it will only select <strong>the first element</strong> that matches the given selector. If there are multiple elements on the page, we would need to use something <code>querySelectorAll</code>, but this requires using loops which we have not seen yet. Anyway, let's try it! Without touching the HTML pane, only the Javascipt code, try to get the second then the third box selected.</p>
-
-                <div class="bin">
-                    <code class="code-html nohighlight"><!--<h1>My page heading</h1>
-
-<div id="one">First box</div>
-<div id="two">Second box</div>
-<div id="three">Third box</div> --></code>
-                    <code class="code-css nohighlight"><!--body {
-  background: ivory;
-}
-
-div {
-  border: 2px solid lightblue;
-  margin-bottom: 5px;
-  padding: 3px
-} --></code>
-                    <code class="code-js nohighlight"><!--// Select an element by ID
-// and store it in a variable
-var myElement = document.querySelector("#one");
-
-// modify the style of that element
-// we'll cover how this works later
-myElement.style.color = "hotpink";
-
-// and change its text
-myElement.innerHTML = "Selected element!" --></code>
-                </div>
-
-            </article>
-            <article hidden>
-                <h2>Manipulating HTML from JavaScript: objects</h2>
-
-                <p>When we store an HTML element in a variable, its type is not a string or integer or boolean. It is instead what we call an <strong>object</strong>.</p>
-
-                <p>Objects are a relatively advanced programming concept, but to make it simple, variables that are objects can have their own “<strong>sub-variables</strong>”, which are actually called <em>properties</em>, and their own <strong>functions</strong>, which are called <em>methods</em>. If we had an object called <code>person</code>, we might have:</p>
-                
-                <ul>
-                    <li><code>person.name</code>, a property</li>
-                    <li><code>person.age</code>, another property</li>
-                    <li><code>person.sendMessage("Hey!")</code>, a method</li>
-                </ul>
-
-                <p>On the previous pages, we've seen an example of how properties and methods are used: with the <strong>dot notation</strong>. When we used <code>console.log()</code>, we actually used the <em>method</em> (function) called <code>log</code>, from the special object called <code>console</code>. The <code>console</code> object indeed has other methods we could use: <code>warn()</code>, <code>error()</code>…</p>
-
-                <p>Let's take the following HTML example:</p>
-
-                <pre><code class="nohighlight">&lt;h2&gt;Opening hours&lt;/h2&gt;
-
-<span class="highlight">&lt;h3&gt;Weekdays&lt;/h3&gt;</span>
-&hellip;
-&lt;h3&gt;Weekends&lt;/h3&gt;</code></pre>
-
-                <div class="example"><h2>Opening hours</h2>
-                <h3><span class="highlight">Weekdays</span></h3>
-                &hellip;
-                <h3>Weekends</h3></div>
-
-                <p>Now let's say we have selected the <strong>Weekdays</strong> heading element, and stored it into a variable called <span class="highlight"><code>weekdaysHeading</code></span>. This object has properties that will change <strong>only what is in this heading</strong>, and not others. For example, we can do:</p>
-
-                <pre><code>weekdaysHeading.style.color = "blue";</code></pre>
-
-                <p>And the result will be:</p>
-
-                <div class="example"><h2>Opening hours</h2>
-                <h3 style="color:blue"><span class="sr-only">Blue</span> Weekdays</h3>
-                &hellip;
-                <h3>Weekends</h3></div>
-
-                <p>Objects allow us to change things independently of other elements.</p>
-
-                <h3>Properties and methods for HTML objects</h3>
-
-                <p>There are a wide, but limited, amount of properties and methods you can use on objects that represent HTML elements. Most of the time, <strong>they map to the HTML attributes of the element</strong>. For example:</p>
-
-                <ul>
-                    <li><code>element.style</code>, as we've seen above, is an object of its own &mdash; and each of its properties is the equivalent of a CSS property that can be set dynamically. For example <code>element.style.color</code> or <code>element.style.background</code>.</li>
-                    <li>As we've said in the beginning, we cannot have hyphens in a variable or function name, so CSS properties like <code>font-size</code> and <code>margin-top</code> become <code>fontSize</code> and <code>marginTop</code>. The same is true for some attributes that we can set directly on the element: we can set <code>el.tabIndex</code> to modify the <code>tabindex</code> attribute.</li>
-                    <li>To set attributes, the best option is to use the method <code>element.setAttribute(<em>attributeName</em>, <em>value</em>)</code>. For example, if we have a heading <code>&lt;h2&gt;Contact&lt;/h2&gt;</code> and we call <code>myHeading.setAttribute("id",  "call-us")</code>, then the HTML will become <code>&lt;h2 id="call-us"&gt;Contact&lt;/h2&gt;</code>.</li>
-                    <li>You can also get the current value of an attribute, and store it into a variable. For this, use <code>element.getAttribute(<em>attributeName</em>)</code>.</li>
-                </ul>
-
-
-                <h3>Have a play!</h3>
-
-                <p>Try to select different elements and set attributes and styles dynamically. For reference, you may want to have a look at the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Properties_Reference" target="_blank">CSS properties reference<span class="sr-only"> (opens in new window)</span></a> for a list of things to test.</p>
-
-                <div class="bin">
-                    <code class="code-html nohighlight"><!--<h1>My page heading</h1>
-
-<div id="one">First box</div>
-<div id="two">Second box</div>
-<div id="three">Third box</div> --></code>
-                    <code class="code-css nohighlight"><!--body {
-  background: ivory;
-}
-
-div {
-  border: 2px solid lightblue;
-  margin-bottom: 5px;
-  padding: 3px
-} --></code>
-                    <code class="code-js nohighlight"><!--// Select an element by ID
-// and store it in a variable
-var myElement = document.querySelector("#one");
-
-// modify the style of that element
-myElement.style.color = "hotpink";
-
-// and its text
-myElement.innerHTML = "Selected element!" --></code>
-                    </div>
-
-            </article>
-
-            <article hidden>
-                <h2>Event handlers 1: event listeners</h2>
-
-                <p>Now that we've looked at functions and selecting HTML elements, we can start looking at <strong>event handlers.</strong> These are functions called when a specific <strong>event</strong> happens on an element that we've selected; an event can be a <strong>click</strong> (with a mouse, or touch on mobile), a key press, a value changing (e.g. a checkbox becoming unchecked), the mouse simply going over an element (without clicking), etc.</p>
-
-                <p>Consider the following HTML:</p>
-
-                <pre><code>&lt;button class="magic_button"&gt;Make box bigger&lt;/button&gt;
-
-&lt;div class="box"&gt;&lt;/div&gt;</code></pre>
-
-                <button class="magic_button_off">Make box bigger</button>
-                <div class="box_off"></div>
-
-                <p>Of course, nothing happens yet when you press it. We cannot just set the size of the box in code anywhere, because it would expand immediately and not react to the button. We want to <strong>create a function</strong> that will make the box bigger, say <code>makeBoxBigger()</code>, and <strong>only call this function when the button is pressed</strong>.</p>
-
-                <p>This is done by using <code><em>element</em>.addEventListener(eventType, functionToCall)</code>. This is a method, applied to an element, as we've seen before. It says "keeps listening for <em>eventType</em> on this <em>element</em>. When this type of event happens, then call <em>functionToCall</em>".</p>
-
-                <p>So in our example, we'll have our element called <code>magicButton</code>, the <code>eventType</code> is going to be <code>click</code>, and the function is going to be <code>makeBoxBigger</code>. Let's try below:</p>
-
-                <div class="bin">
-                    <code class="code-html nohighlight"><!--<button class="magic_button">Make box bigger</button>
-
-<div class="box"></div>--></code>
-                    <code class="code-css nohighlight"><!--.box {
-    height: 80px;
-    width: 80px;
-
-    background: lightsalmon;
-    border: 3px solid pink;
-} --></code>
-                    <code class="code-js nohighlight"><!--// Store elements in variables
-var magicButton = document.querySelector('.magic_button');
-var box = document.querySelector('.box');
-
-// Keep track of the size of our box
-var boxSize = 80;
-
-// Create a function that will make our box bigger
-// and store it in a variable!
-var makeBoxBigger = function () {
-   boxSize += 20;
-   box.style.width = boxSize + 'px';
-   box.style.height = boxSize + 'px';
-}
-
-// Create an event handler
-magicButton.addEventListener("click", makeBoxBigger);--></code>
-                </div>
-            </article>
-
-            <article hidden>
-                <h2>Event handlers 2: event types and keyboard accessibility</h2>
-
-                <p>In the example above, even though we used the <code>click</code> event, our button still worked when we pressed the Enter or Space key. This is thanks to a convenience of browsers which fire a click event on keyboard and touch input, <strong>but this only works on inputs and buttons</strong>. If we were to create a custom component, we will have to implement both events independently.</p>
-
-                <p>Other event types exist for keyboard and touch, and more specific events can be useful for special interaction. For example we can use <code>keyup</code> for when a key is released, <code>keydown</code> for when it is pressed, <code>touchstart</code> for when a finger starts pressing the screen&hellip; this allows us to create interactions like drag and drop, or games. For most keyboard-specific handlers, we are also able to get the specific key that was just pressed.</p>
+                <p>The button below is implemented using a <code>div</code>. At the moment you cannot focus on it with a keyboard: try using the <code>tabindex</code> attribute to make it gain focus. This will not be enough: you need to add a new event handler in JS.</p>
 
                 <p><strong>Exercise time!</strong> Recreate the demo above, but this time we want different interactions on click and on keyboard. Create a function called <code>makeBoxSmaller()</code> by copying the function above and changing the + to a -, and copy the event listener to use a <code>keydown</code> event instead of <code>mousedown</code>.</p>
 
                 <div class="bin">
-                    <code class="code-html nohighlight"><!--<div class="magic_button" tabindex="0" role="button">Click to make bigger, press key to make it smaller</div>
+                    <code class="code-html nohighlight"><!--<div class="magic_button" role="button">Click to make bigger, press key to make it smaller</div>
 
 <div class="box">80</div>--></code>
                     <code class="code-css nohighlight"><!--.magic_button{
@@ -553,9 +103,9 @@ magicButton.addEventListener("mouseup", makeBoxBigger); --></code>
 
 
             <article hidden>
-                <h2>Moving focus programmatically</h2>
+                <h2>Keyboard: moving focus programmatically</h2>
 
-                <p>One important method that we did not talk about yet is the <code>element.focus()</code> method. Calling <code>.focus()</code>, with no arguments, moves the focus to a specific element, just as if the user tabbed onto it.</p>
+                <p>Use the <code><em>element</em>.focus()</code> method to force moving to a certain point. Calling <code>.focus()</code>, with no arguments, moves the focus to a specific element, just as if the user tabbed onto it.</p>
 
                 <div class="bin">
                     <code class="code-html nohighlight"><!--<h3>Try tabbing on the links below...</h3>
@@ -589,84 +139,9 @@ giveFocusButton.addEventListener("click", function() {
 
                 <p>However, when used wisely it can be useful! A common example is a modal dialog. Let's see that on the next page&hellip;</p>
             </article>
-
+            
             <article hidden>
-                <h2>Basics of ARIA</h2>
-
-                <p>Let's talk a bit about ARIA. ARIA stands for <strong>Accessible Rich Internet Applications</strong> and is an <strong>extension</strong> of HTML that allows us to make complex web applications and widgets more accessible to people who use Assistive Technology. With ARIA, we can define custom <strong>roles</strong>, <strong>states</strong>, <strong>names</strong> with the value of an element, which allows us to fulfill the success criteria <a href="https://www.w3.org/TR/UNDERSTANDING-WCAG20/ensure-compat-rsv.html" target="_blank">4.1.2 Name, Role, Value<span class="sr-only"> (opens in new window)</span></a> of the WCAG.</p>
-
-                <p>ARIA mostly adds new HTML attributes that start with <code>aria-</code>, as well as the special <code>role</code> attribute. A lot of the possible attributes are in fact already implicit in a lot of existing HTML elements. For example, <code>&lt;h3&gt;</code> is equivalent to writing <code>&lt;div role="heading" aria-level="3"&gt;</code>, and the <code>&lt;nav&gt;</code> element will be treated the same as <code>&lt;div role="navigation"&gt;</code>.</p>
-
-                <p>It would be redundant to write ARIA attributes on elements that already have semantics: and as Heydon Pickering says, <q>ARIA isn't for making HTML accessible, it's for making <em>inaccessible</em> HTML accessible</q>.</p>
-
-                <p>Sometimes, native HTML elements won't cut it, because of complex interactions or implementations. Examples that you will have encountered include <strong>accordions</strong>: the expanded or collapsed state needs to be communicated non-visually, and this can be achieved using <code>aria-expanded</code>. Text that changes elsewhere on the page needs to be announced, with <code>aria-live</code>. Tabs can be made accessible as such by using <code>role="tab"</code> and <code>aria-selected</code>, despite not having any native element for them in HTML.</p>
-                
-                <p>Here's an example of an accordion button. Sometime ARIA elements need to remain the same and are set in HTML only, but sometimes they need to be changed in JS for it to make sense:</p>
-
-                <div class="bin">
-                    <code class="code-html nohighlight"><!--<button id="expand_data" aria-expanded="false">View more data ▼</button>
-
-<div id="my_data" hidden>
-  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut accusantium esse praesentium ducimus minus, maxime cum sit voluptatum assumenda a amet at perferendis officiis optio quisquam quos officia eligendi asperiores!
-</div> --></code>
-    <code class="code-css nohighlight"><!-- #my_data {
-  border: 1px solid blue;
-  padding: .4em;
-  margin-top: 1em
-}
---></code>
-    <code class="code-js nohighlight"><!--var expandButton = document.querySelector('#expand_data');
-var myData = document.querySelector('#my_data');
-
-expandButton.addEventListener('click', function() {
-  // This will invert the value of the hidden attribute
-  myData.hidden = !myData.hidden;
-
-  // we update the value of aria-expanded
-  if(myData.hidden) {
-    expandButton.setAttribute('aria-expanded', "false");
-    expandButton.innerHTML = "View more data ▼";
-  } else {
-    expandButton.setAttribute('aria-expanded', "true");
-    expandButton.innerHTML = "View more data ▲";
-  }
-}); --></code>
-                </div>
-
-                <p>Have a look at the code and now try to make the toggle button below accessible. At the moment, screen reader users do not know whether it is pressed or not; there is only a visual cue. Hint: use <code>aria-pressed</code>.</p>
-
-                <div class="bin">
-                    <code class="code-html nohighlight"><!--<button id="pressable">I can be pushed!</button>--></code>
-    <code class="code-css nohighlight"><!-- #pressable {
-    border: 4px outset salmon;
-    font-size: 2em;
-    background-color: lightsalmon;
-}
-
-#pressable.pressed {
-    border: 4px inset salmon;
-    font-size: 2em;
-    background-color: darksalmon;
-}
---></code>
-    <code class="code-js nohighlight"><!--var pressableButton = document.querySelector('#pressable');
-
-// Here we edit an attribute directly:
-// element.className edits the "class" attribute in CSS
-pressableButton.addEventListener('click', function() {
-  if(pressableButton.className == "") {
-    pressableButton.className = "pressed";
-  } else {
-    pressableButton.className = "";
-  }
-}); --></code>
-                </div>
-            </article>
-
-            <article hidden>
-                <h2>Example: modal dialogs</h2>
-
-                <p>Let's try to put it all together!</p>
+                <h2>Keyboard + ARIA: modal dialogs</h2>
 
                 <p>The following is an inaccessible modal dialog: the focus is not moved, the background receives focus with a screen reader and a keyboard. There is also no label on the close button.</p>
 
@@ -862,20 +337,74 @@ document.addEventListener("keyup", function(e) {
             </article>
 
             <article hidden>
-                <h2>Questions?</h2>
+                <h2>ARIA: giving states</h2>
 
-                <h3>Doing more testing!</h3>
+                <p>Sometimes, native HTML elements won't cut it, because of complex interactions or implementations. Examples that you will have encountered include <strong>accordions</strong>: the expanded or collapsed state needs to be communicated non-visually, and this can be achieved using <code>aria-expanded</code>. Text that changes elsewhere on the page needs to be announced, with <code>aria-live</code>. Tabs can be made accessible as such by using <code>role="tab"</code> and <code>aria-selected</code>, despite not having any native element for them in HTML.</p>
+                
+                <p>Here's an example of an accordion button. Sometime ARIA elements need to remain the same and are set in HTML only, but sometimes they need to be changed in JS for it to make sense:</p>
 
-                <a href="https://codepen.io">CodePen</a> is a tool similar to the code used in here, that allow you to quickly test HTML, CSS and JS in a single screen.
+                <div class="bin">
+                    <code class="code-html nohighlight"><!--<button id="expand_data" aria-expanded="false">View more data ▼</button>
 
-                <p>The developer tools / web inspector (F12) have a console that will run in the <strong>context</strong> of the page.</p>
+<div id="my_data" hidden>
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut accusantium esse praesentium ducimus minus, maxime cum sit voluptatum assumenda a amet at perferendis officiis optio quisquam quos officia eligendi asperiores!
+</div> --></code>
+    <code class="code-css nohighlight"><!-- #my_data {
+  border: 1px solid blue;
+  padding: .4em;
+  margin-top: 1em
+}
+--></code>
+    <code class="code-js nohighlight"><!--var expandButton = document.querySelector('#expand_data');
+var myData = document.querySelector('#my_data');
 
-                <h3>Sources and references</h3>
-                <ul>
-                    <li><a href="https://openclassrooms.com/courses/learn-the-basics-of-javascript/introduction-to-programming">OpenClassrooms</a></li>
-                    <li><a href="http://developer.mozilla.org">Mozilla Developer Network</a></li>
-                </ul>
+expandButton.addEventListener('click', function() {
+  // This will invert the value of the hidden attribute
+  myData.hidden = !myData.hidden;
+
+  // we update the value of aria-expanded
+  if(myData.hidden) {
+    expandButton.setAttribute('aria-expanded', "false");
+    expandButton.innerHTML = "View more data ▼";
+  } else {
+    expandButton.setAttribute('aria-expanded', "true");
+    expandButton.innerHTML = "View more data ▲";
+  }
+}); --></code>
+                </div>
+
+                <p>Have a look at the code and now try to make the toggle button below accessible. At the moment, screen reader users do not know whether it is pressed or not; there is only a visual cue. Hint: use <code>aria-pressed</code>.</p>
+                
+                <p>The full reference for aria-pressed can be found in the <a href="">ARIA spec</a> (but as you will see it is very verbose!).</p>
+
+                <div class="bin">
+                    <code class="code-html nohighlight"><!--<button id="pressable">I can be pushed!</button>--></code>
+    <code class="code-css nohighlight"><!-- #pressable {
+    border: 4px outset salmon;
+    font-size: 2em;
+    background-color: lightsalmon;
+}
+
+#pressable.pressed {
+    border: 4px inset salmon;
+    font-size: 2em;
+    background-color: darksalmon;
+}
+--></code>
+    <code class="code-js nohighlight"><!--var pressableButton = document.querySelector('#pressable');
+
+// Here we edit an attribute directly:
+// element.className edits the "class" attribute in CSS
+pressableButton.addEventListener('click', function() {
+  if(pressableButton.className == "") {
+    pressableButton.className = "pressed";
+  } else {
+    pressableButton.className = "";
+  }
+}); --></code>
+                </div>
             </article>
+
         </main>
 
         <!-- Scripts -->
