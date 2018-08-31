@@ -140,6 +140,51 @@ giveFocusButton.addEventListener("click", function() {
                 <p>However, when used wisely it can be useful! A common example is a modal dialog. Let's see that on the next page&hellip;</p>
             </article>
             
+            
+            <article hidden>
+                <h2>Screen readers: well-connected labels</h2>
+
+                <p>Use the <code>label</code> element with a <code>for</code> attribute that references the <code>id</code> of the field.</p>
+                
+                <p>You can test whether they are correctly linked by just clicking on the label: it should focus the field!</p>
+
+                <div class="bin">
+                    <code class="code-html nohighlight"><!--<form>
+    <h2>Billing information</h2>
+    
+    <div>
+        Name<br>
+        <input type="text" id="name">
+    </div>
+    
+    <div>
+        Address<br>
+        <textarea id="addr"></textarea>
+    </div>
+    
+    <div>
+        Password<br>
+        <input type="password" id="pwd">
+        
+        <div id="hint">Your password must contain letters, exactly one digit, two emojis, a protagonist, a love story, a conflict, a plot twist, and a resolution.</div>
+    </div>
+    
+</form>--></code>
+                    <code class="code-css nohighlight"><!--input:focus {
+    outline: 2px solid orange;
+} 
+
+#hint {
+    color: #777;
+    font-size: 0.9em;
+    max-width: 55ch;
+} --></code>
+                    <code class="code-js nohighlight"><!----></code>
+                </div>
+                
+                <p>After ARIA: you can also go further and associate that hint text using <code>aria-describedby</code>. This attribute is placed on the field and not the label!</p>
+            </article>
+            
             <article hidden>
                 <h2>Keyboard + ARIA: modal dialogs</h2>
 
