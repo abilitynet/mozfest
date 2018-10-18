@@ -1,28 +1,20 @@
-# Intro to Accessibility EMF workshop
+# Intro to Accessibility MozFest workshop
 
 ## Exercises and resources
 
-Available here: https://victorloux.github.io/emf-a11y
+Available here: https://victorloux.github.io/mozfest-a11y
 
 ## Workshop Slides
 
 To do, this will actually have alt text (as a PDF version), presenter notes and animated / video slides fixed...
 
-![Slide 01](slides/access.001.png?raw=true)
-![Slide 03](slides/access.003.png?raw=true)
-![Slide 04](slides/access.004.png?raw=true)
-![Slide 05](slides/access.005.png?raw=true)
 ![Slide 06](slides/access.006.png?raw=true)
 ![Slide 07](slides/access.007.png?raw=true)
 ![Slide 08](slides/access.008.png?raw=true)
 ![Slide 09](slides/access.009.png?raw=true)
 ![Slide 10](slides/access.010.png?raw=true)
-![Slide 11](slides/access.011.png?raw=true)
 ![Slide 12](slides/access.012.png?raw=true)
-![Slide 13](slides/access.013.png?raw=true)
-![Slide 14](slides/access.014.png?raw=true)
-![Slide 15](slides/access.015.png?raw=true)
-![Slide 16](slides/access.016.png?raw=true)
+
 ![Slide 17](slides/access.017.png?raw=true)
 ![Slide 18](slides/access.018.png?raw=true)
 ![Slide 19](slides/access.019.png?raw=true)
@@ -65,14 +57,7 @@ To do, this will actually have alt text (as a PDF version), presenter notes and 
 ![Slide 56](slides/access.056.png?raw=true)
 ![Slide 57](slides/access.057.png?raw=true)
 ![Slide 58](slides/access.058.png?raw=true)
-![Slide 59](slides/access.059.png?raw=true)
-![Slide 60](slides/access.060.png?raw=true)
-![Slide 61](slides/access.061.png?raw=true)
-![Slide 62](slides/access.062.png?raw=true)
-![Slide 63](slides/access.063.png?raw=true)
-![Slide 64](slides/access.064.png?raw=true)
-![Slide 65](slides/access.065.png?raw=true)
-![Slide 66](slides/access.066.png?raw=true)
+
 ![Slide 67](slides/access.067.png?raw=true)
 ![Slide 68](slides/access.068.png?raw=true)
 ![Slide 69](slides/access.069.png?raw=true)
@@ -80,22 +65,10 @@ To do, this will actually have alt text (as a PDF version), presenter notes and 
 ![Slide 71](slides/access.071.png?raw=true)
 ![Slide 72](slides/access.072.png?raw=true)
 ![Slide 73](slides/access.073.png?raw=true)
-![Slide 74](slides/access.074.png?raw=true)
-![Slide 75](slides/access.075.png?raw=true)
+
+
 ![Slide 76](slides/access.076.png?raw=true)
-![Slide 77](slides/access.077.png?raw=true)
-![Slide 78](slides/access.078.png?raw=true)
-![Slide 79](slides/access.079.png?raw=true)
-![Slide 80](slides/access.080.png?raw=true)
-![Slide 81](slides/access.081.png?raw=true)
-![Slide 82](slides/access.082.png?raw=true)
-![Slide 83](slides/access.083.png?raw=true)
-![Slide 84](slides/access.084.png?raw=true)
-![Slide 85](slides/access.085.png?raw=true)
-![Slide 86](slides/access.086.png?raw=true)
-![Slide 87](slides/access.087.png?raw=true)
-![Slide 88](slides/access.088.png?raw=true)
-![Slide 89](slides/access.089.png?raw=true)
+![Slide 76](slides/access.084.png?raw=true)
+![Slide 76](slides/access.085.png?raw=true)
 ![Slide 90](slides/access.090.png?raw=true)
 ![Slide 91](slides/access.091.png?raw=true)
-![Slide 92](slides/access.092.png?raw=true)
