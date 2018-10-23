@@ -2,7 +2,7 @@
 
 ## Exercises and resources
 
-Available here: https://victorloux.github.io/mozfest-a11y
+Available here: https://abilitynet.github.io/mozfest
 
 ## Workshop Slides
 
